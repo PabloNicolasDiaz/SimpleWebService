@@ -15,9 +15,9 @@ This repository contains an example project for building contract-first, SOAP ba
 * Integration test to ensure correct WSDL and XSD publishing
 * Generating Jacoco reports, enabling both Unit and Integration tests coverage 
 * Usage of several Maven Plugins and features, including
-** Using Maven Toolchains
-** Reporting bugs using SpotBugs
-** Configuring Maven Surefire and Failsafe for automated testing
+ * Using Maven Toolchains
+ * Reporting bugs using SpotBugs
+ * Configuring Maven Surefire and Failsafe for automated testing
 
 ## Setup and Running
 
