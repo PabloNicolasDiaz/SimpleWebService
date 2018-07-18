@@ -1,0 +1,10 @@
+server:
+  port: 9090
+  serviceName : DominiosService 
+  wsdlResourcePath : /wsdl/simpleWebService.wsdl
+  xsdResourcePath : /wsdl/xsd/
+  
+logging:
+  level:
+    root: ERROR
+    org.springframework.web: DEBUG
