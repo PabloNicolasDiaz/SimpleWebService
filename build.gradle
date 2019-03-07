@@ -46,7 +46,7 @@ task wsimport {
 			package: "${wsimportPackageName}",
 			xnocompile: "true",
 			target: "2.2",
-            
+
 			wsdl: "${projectDir}/src/main/resources/wsdl/simpleWebService.wsdl") {
 				binding(dir:"${projectDir}/src/jaxws", includes:"bindings.xml")
 				xjcarg(value: "-XautoNameResolution")
@@ -133,7 +133,7 @@ dependencies {
 	jaxws group: 'org.glassfish.metro', name:'webservices-rt', version:'2.3.1'
 	jaxws group: 'org.jvnet.jaxb2_commons' , name:'jaxb2-basics' , version: "${project.'org.jvnet.jaxb2_commons.jaxb2-basics.version'}"
 	jaxws group: 'org.jvnet.jaxb2_commons' , name:'jaxb2-value-constructor' , version: "${project.'org.jvnet.jaxb2_commons.jaxb2-value-constructor.version'}"
-    jaxws group: 'javax.activation', name:'activation',version:'1.1'
+	jaxws group: 'javax.activation', name:'activation',version:'1.1'
 
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version:'2.0.3.RELEASE'
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-web-services', version:'2.0.3.RELEASE'
