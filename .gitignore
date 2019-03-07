@@ -89,3 +89,5 @@ local.properties
 .worksheet
 /.classpath
 /.project
+/.gradle/
+/build/

@@ -55,12 +55,10 @@ class SimpleOperationEndpointTest {
 	}
 
 	@Test
-
 	void testGivenASimpleRequestWhenIsCalledEmptyThenReturnsASimpleResponse() throws SimpleOperationFault_Exception {
 		SimpleOperationRequest simpleRequest = new SimpleOperationRequest();
 		assertThrows(SimpleOperationFault_Exception.class, () -> {
 			endpoint.simpleOperation(simpleRequest);
 		});
 	}
-
 }

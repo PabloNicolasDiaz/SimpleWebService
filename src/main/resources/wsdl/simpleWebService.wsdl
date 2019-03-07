@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <wsdl:definitions
 	xmlns:simpleWebService="http://www.nicolas.com.ar/simpleWebService/"
 	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
@@ -30,10 +30,10 @@
 		<wsdl:operation name="SimpleOperation">
 			<wsdl:input name="simpleOpertionRequest"
 				message="simpleWebService:SimpleOperationRequest" />
-			<wsdl:fault name="simpleOperationFault" 
-				message="simpleWebService:SimpleOperationFault" />
 			<wsdl:output name="simpleOperationResponse"
 				message="simpleWebService:SimpleOperationResponse" />
+			<wsdl:fault name="simpleOperationFault" 
+				message="simpleWebService:SimpleOperationFault" />
 		</wsdl:operation>
 	</wsdl:portType>
 	<wsdl:binding name="simpleServiceSOAP"

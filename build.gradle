@@ -1,0 +1,156 @@
+buildscript {
+	repositories { mavenCentral() }
+	dependencies { classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.5.RELEASE") }
+}
+
+plugins {
+	id 'java'
+	id 'eclipse-wtp'
+	id 'org.springframework.boot' version '2.0.5.RELEASE'
+	id "io.spring.dependency-management" version "1.0.6.RELEASE"
+	id 'jacoco'
+	id "com.diffplug.gradle.spotless" version "3.16.0"
+	id 'org.unbroken-dome.test-sets' version '2.1.1'
+}
+
+bootJar { baseName = 'simpleWebService' }
+
+repositories { mavenCentral() }
+
+group = 'ar.com.nicolas'
+version = '0.0.1-SNAPSHOT'
+description = "simple SOAP Web Service"
+
+sourceCompatibility = 10
+targetCompatibility = 10
+
+tasks.withType(JavaCompile) { options.encoding = 'UTF-8'  }
+
+configurations { jaxws }
+
+task wsimport {
+	ext.destDir = file("${buildDir}/generated-sources/generateWsdlClients/java")
+	doLast {
+		ant {
+			sourceSets.main.java.outputDir.mkdirs()
+			destDir.mkdirs()
+			taskdef(name: 'wsimport',
+			classname: 'com.sun.tools.ws.ant.WsImport',
+			classpath: configurations.jaxws.asPath
+			)
+			wsimport(keep: true,
+			sourcedestdir: destDir,
+			extension: "true",
+			verbose: "false",
+			quiet: "false",
+			package: "${wsimportPackageName}",
+			xnocompile: "true",
+			target: "2.2",
+			wsdl: "${projectDir}/src/main/resources/wsdl/simpleWebService.wsdl") {
+				binding(dir:"${projectDir}/src/jaxws", includes:"bindings.xml")
+				xjcarg(value: "-XautoNameResolution")
+				xjcarg(value: "-Xequals")
+				xjcarg(value: "-XhashCode")
+				xjcarg(value: "-Xvalue-constructor")
+			}
+		}
+	}
+}
+
+wsimport.onlyIf { !(file("${buildDir}/generated-sources/generateWsdlClients/java").exists()) }
+
+sourceSets {
+	main { java {   srcDir "$buildDir/generated-sources/generateWsdlClients/java" } }
+}
+
+testSets { integrationTest  }
+
+test {
+	useJUnitPlatform { excludeTags 'acceptance' }
+	jacoco {
+		destinationFile = file("${buildDir}/${project.'jacoco.ut.execution.data.file'}")
+	}
+}
+
+integrationTest {
+	useJUnitPlatform ()
+	description = 'Runs the integration tests.'
+	group = 'verification'
+	jacoco {
+		destinationFile = file("${buildDir}/${project.'jacoco.it.execution.data.file'}")
+	}
+	systemProperty "karate.options", System.properties.getProperty("karate.options")
+	// Pull karate options into the JVM
+	systemProperty "karate.env", System.properties.getProperty("karate.env")
+	// Ensure tests are always run
+	outputs.upToDateWhen { false }
+	// attach debugger
+	if (System.getProperty('debug', 'false') == 'true') {
+		jvmArgs '-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=9009'
+	}
+}
+
+compileJava {
+	dependsOn wsimport
+	source wsimport.destDir
+}
+
+jacoco { toolVersion = "${project.'org.jacoco.jacoco-maven-plugin.version'}"   }
+
+jacocoTestReport {
+	reports {
+		xml.enabled false
+		csv.enabled false
+		html.destination file("${buildDir}/jacoco-html")
+	}
+}
+
+spotless {
+	java {
+		licenseHeaderFile 'spotless.license_java'
+		importOrderFile 'spotless.importorder'
+		removeUnusedImports()
+		eclipse().configFile 'spotless.eclipseformat.xml'
+		paddedCell()
+	}
+	groovyGradle {
+		target '*.gradle'
+		greclipse()
+		paddedCell()
+	}
+	format 'xml', {
+		target fileTree('.') {
+			include '**/*.xml', '**/*.xsd', '**/*.wsdl'
+			exclude '**/build/**'
+		}
+	}
+}
+
+dependencies {
+
+	jaxws group: 'org.glassfish.metro', name:'webservices-tools', version:'2.3.1'
+	jaxws group: 'org.glassfish.metro', name:'webservices-rt', version:'2.3.1'
+	jaxws group: 'org.jvnet.jaxb2_commons' , name:'jaxb2-basics' , version: "${project.'org.jvnet.jaxb2_commons.jaxb2-basics.version'}"
+	jaxws group: 'org.jvnet.jaxb2_commons' , name:'jaxb2-value-constructor' , version: "${project.'org.jvnet.jaxb2_commons.jaxb2-value-constructor.version'}"
+
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version:'2.0.3.RELEASE'
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-web-services', version:'2.0.3.RELEASE'
+	compile group: 'wsdl4j', name: 'wsdl4j', version:'1.6.3'
+	compile group: 'org.jvnet.jaxb2_commons', name: 'jaxb2-basics-runtime', version:'1.11.1'
+	compile group: 'com.google.guava', name: 'guava', version:'23.5-jre'
+	compile group: 'javax.xml.ws', name: 'jaxws-api', version: '2.3.1'
+	compile group: 'org.glassfish.metro', name:'webservices-rt', version:'2.3.1'
+	compile group: 'javax.activation', name:'activation',version:'1.1'
+
+	testImplementation  group: 'org.junit.jupiter', name: 'junit-jupiter-api', version:'5.2.0'
+	testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version:'5.2.0'
+
+	integrationTestImplementation(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version:'2.0.3.RELEASE') { exclude(module: 'junit') }
+	integrationTestImplementation group: 'org.junit.platform', name: 'junit-platform-launcher', version:'1.2.0'
+	integrationTestImplementation group: 'com.predic8', name: 'soa-model-core', version:'1.6.0'
+
+	integrationTestImplementation 'com.intuit.karate:karate-junit5:0.9.1'
+	integrationTestImplementation 'com.intuit.karate:karate-apache:0.9.1'
+}
+
+check.dependsOn integrationTest

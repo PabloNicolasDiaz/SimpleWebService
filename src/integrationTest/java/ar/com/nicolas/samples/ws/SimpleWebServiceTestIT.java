@@ -41,6 +41,8 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import ar.com.nicolas.ws.simpleWebService.SimpleWebServiceApplication;
+
 import com.google.common.io.CharSource;
 import com.predic8.schema.Import;
 import com.predic8.soamodel.Difference;
@@ -48,8 +50,6 @@ import com.predic8.wsdl.Definitions;
 import com.predic8.wsdl.WSDLParser;
 import com.predic8.wsdl.diff.WsdlDiffGenerator;
 import com.predic8.xml.util.ClasspathResolver;
-
-import ar.com.nicolas.ws.simpleWebService.SimpleWebServiceApplication;
 
 @Tag("acceptance")
 @ExtendWith(SpringExtension.class)
@@ -86,6 +86,6 @@ public class SimpleWebServiceTestIT {
 				.parse(new ReaderInputStream(CharSource.wrap(s).openStream(), Charset.defaultCharset()));
 		WsdlDiffGenerator diffGen = new WsdlDiffGenerator(d1, d2);
 		List<Difference> lst = diffGen.compare();
-		assertThat(lst.size()).isEqualTo(1);	
+		assertThat(lst.size()).isEqualTo(1);
 	}
 }

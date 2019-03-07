@@ -28,12 +28,12 @@ import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 import org.springframework.ws.soap.server.endpoint.annotation.SoapAction;
 
-import com.google.common.base.Strings;
-
 import ar.com.nicolas.ws.generated.simpleWebService.SimpleOperationFault;
 import ar.com.nicolas.ws.generated.simpleWebService.SimpleOperationFault_Exception;
 import ar.com.nicolas.ws.generated.simpleWebService.SimpleOperationRequest;
 import ar.com.nicolas.ws.generated.simpleWebService.SimpleOperationResponse;
+
+import com.google.common.base.Strings;
 
 @Endpoint
 public class SimpleOperationEndpoint {
@@ -41,9 +41,8 @@ public class SimpleOperationEndpoint {
 	@SoapAction(value = "http://www.nicolas.com.ar/simpleWebService/simpleOperation")
 	@ResponsePayload
 	public SimpleOperationResponse simpleOperation(@RequestPayload SimpleOperationRequest parameters)
-			throws SimpleOperationFault_Exception
+			throws SimpleOperationFault_Exception {
 
-	{
 		String name = parameters.getIn();
 		if (Strings.isNullOrEmpty(name))
 			throw new SimpleOperationFault_Exception("In Parameter can not be null",

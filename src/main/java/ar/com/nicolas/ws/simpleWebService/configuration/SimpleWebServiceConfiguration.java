@@ -56,7 +56,7 @@ public class SimpleWebServiceConfiguration extends WsConfigurerAdapter implement
 
 	private static PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
 	private ConfigurableBeanFactory configurableBeanFactory;
-	
+
 	@Value("${server.xsdResourcePath}")
 	private String xsdResourcePath;
 
@@ -67,9 +67,9 @@ public class SimpleWebServiceConfiguration extends WsConfigurerAdapter implement
 
 	@PostConstruct
 	public void onPostConstruct() throws ParserConfigurationException, IOException, SAXException {
-		String path ="classpath:" + xsdResourcePath + "*.xsd";
+		String path = "classpath:" + xsdResourcePath + "*.xsd";
 		for (Resource r : resolver.getResources(path)) {
- 			SimpleXsdSchema s = new SimpleXsdSchema(r);
+			SimpleXsdSchema s = new SimpleXsdSchema(r);
 			s.afterPropertiesSet();
 			configurableBeanFactory.registerSingleton(FilenameUtils.removeExtension(r.getFilename()), s);
 		}

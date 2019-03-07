@@ -1,7 +1,7 @@
 /*******************************************************************************
  * MIT License
  *
- * Copyright (c) 2018 Pablo Nicolas Diaz Bilotto <pablonicolas.diaz@gmail.com>
+ * Copyright (c) 2019 Pablo Nicolas Diaz Bilotto <pablonicolas.diaz@gmail.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,15 +21,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *******************************************************************************/
-package ar.com.nicolas.ws.simpleWebService;
+package ar.com.nicolas.samples.ws;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@SpringBootApplication()
-public class SimpleWebServiceApplication {
+import ar.com.nicolas.ws.simpleWebService.SimpleWebServiceApplication;
 
-	public static void main(String[] args) {
-		SpringApplication.run(SimpleWebServiceApplication.class, args);
+import com.intuit.karate.junit5.Karate;
+
+@ExtendWith(SpringExtension.class)
+@SpringBootTest(webEnvironment = WebEnvironment.DEFINED_PORT, classes = SimpleWebServiceApplication.class)
+@TestPropertySource(locations = { "classpath:test-application.properties" })
+public class HelloWorldTest {
+
+	@Karate.Test
+	public Karate testFullPath() {
+		return new Karate().feature("hello-world.feature").relativeTo(getClass());
 	}
+
 }
