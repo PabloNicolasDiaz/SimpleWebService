@@ -115,6 +115,7 @@ spotless {
         paddedCell()
     }
     groovyGradle {
+        encoding 'UTF-8'
         target '*.gradle'
         paddedCell()
         greclipse().configFile('greclipse.properties')
