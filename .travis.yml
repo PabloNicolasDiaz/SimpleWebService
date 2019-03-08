@@ -8,7 +8,7 @@ before_install:
   - chmod +x gradlew
  
 script:
-  - ./gradlew build 
+  - ./gradlew build -s
   
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
