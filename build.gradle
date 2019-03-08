@@ -116,6 +116,7 @@ spotless {
 	}
 	groovyGradle {
 		target '*.gradle'
+        excludeJava()
 		greclipse()
 		paddedCell()
 	}
