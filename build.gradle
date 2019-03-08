@@ -114,12 +114,11 @@ spotless {
         eclipse().configFile 'spotless.eclipseformat.xml'
         paddedCell()
     }
-    groovyGradle {
-        encoding 'UTF-8'
-        target '*.gradle'
-        paddedCell()
-        greclipse().configFile('greclipse.properties')
-    }
+//    groovyGradle { 
+//        target '*.gradle'
+//        paddedCell()
+//        greclipse().configFile('greclipse.properties')
+//    }
     format 'xml', {
         target fileTree('.') {
             include '**/*.xml', '**/*.xsd', '**/*.wsdl'
