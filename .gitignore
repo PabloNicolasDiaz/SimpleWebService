@@ -91,3 +91,4 @@ local.properties
 /.project
 /.gradle/
 /build/
+!/gradle/wrapper/gradle-wrapper.*
