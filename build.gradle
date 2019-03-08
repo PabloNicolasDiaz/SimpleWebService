@@ -116,9 +116,8 @@ spotless {
 	}
 	groovyGradle {
 		target '*.gradle'
-        excludeJava()
-		greclipse()
 		paddedCell()
+		greclipse()
 	}
 	format 'xml', {
 		target fileTree('.') {
