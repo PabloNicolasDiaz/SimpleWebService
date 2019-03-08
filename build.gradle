@@ -9,7 +9,7 @@ plugins {
 	id 'org.springframework.boot' version '2.0.5.RELEASE'
 	id "io.spring.dependency-management" version "1.0.6.RELEASE"
 	id 'jacoco'
-	id "com.diffplug.gradle.spotless" version "3.16.0"
+	id "com.diffplug.gradle.spotless" version "3.18.0"
 	id 'org.unbroken-dome.test-sets' version '2.1.1'
 }
 
