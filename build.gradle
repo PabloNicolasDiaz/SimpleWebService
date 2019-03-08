@@ -114,16 +114,18 @@ spotless {
         eclipse().configFile 'spotless.eclipseformat.xml'
         paddedCell()
     }
-//    groovyGradle { 
-//        target '*.gradle'
-//        paddedCell()
-//        greclipse().configFile('greclipse.properties')
-//    }
+    groovyGradle {
+        target '*.gradle'
+        paddedCell()
+        endWithNewline()
+        greclipse().configFile('greclipse.properties')
+    }
     format 'xml', {
         target fileTree('.') {
             include '**/*.xml', '**/*.xsd', '**/*.wsdl'
             exclude '**/build/**'
         }
+        endWithNewline()
     }
 }
 
