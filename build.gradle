@@ -131,8 +131,8 @@ spotless {
 
 dependencies {
 
-    jaxws group: 'org.glassfish.metro', name:'webservices-tools', version:'2.3.1'
-    jaxws group: 'org.glassfish.metro', name:'webservices-rt', version:'2.3.1'
+    jaxws group: 'org.glassfish.metro', name:'webservices-tools', version:"${project.'org.glassfish.metro.version'}"
+    jaxws group: 'org.glassfish.metro', name:'webservices-rt', version:"${project.'org.glassfish.metro.version'}"
     jaxws group: 'org.jvnet.jaxb2_commons' , name:'jaxb2-basics' , version: "${project.'org.jvnet.jaxb2_commons.jaxb2-basics.version'}"
     jaxws group: 'org.jvnet.jaxb2_commons' , name:'jaxb2-value-constructor' , version: "${project.'org.jvnet.jaxb2_commons.jaxb2-value-constructor.version'}"
     jaxws group: 'javax.activation', name:'activation',version:'1.1'
@@ -142,19 +142,19 @@ dependencies {
     compile group: 'wsdl4j', name: 'wsdl4j', version:'1.6.3'
     compile group: 'org.jvnet.jaxb2_commons', name: 'jaxb2-basics-runtime', version:'1.11.1'
     compile group: 'com.google.guava', name: 'guava', version:"${project.'com.google.guava.version'}"
-    compile group: 'javax.xml.ws', name: 'jaxws-api', version: '2.3.1'
-    compile group: 'org.glassfish.metro', name:'webservices-rt', version:'2.3.1'
+    compile group: 'javax.xml.ws', name: 'jaxws-api', version: "${project.'org.glassfish.metro.version'}"
+    compile group: 'org.glassfish.metro', name:'webservices-rt', version:"${project.'org.glassfish.metro.version'}"
     compile group: 'javax.activation', name:'activation',version:'1.1'
 
-    testImplementation  group: 'org.junit.jupiter', name: 'junit-jupiter-api', version:'5.2.0'
-    testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version:'5.2.0'
+    testImplementation  group: 'org.junit.jupiter', name: 'junit-jupiter-api', version:"${project.'org.junit.jupiter.version'}"
+    testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version:"${project.'org.junit.jupiter.version'}"
 
     integrationTestImplementation(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version:"${project.'org.springframework.spring-boot.version'}") { exclude(module: 'junit') }
-    integrationTestImplementation group: 'org.junit.platform', name: 'junit-platform-launcher', version:'1.2.0'
+    integrationTestImplementation group: 'org.junit.platform', name: 'junit-platform-launcher', version:"${project.'org.junit.platform.version'}"
     integrationTestImplementation group: 'com.predic8', name: 'soa-model-core', version:'1.6.0'
 
-    integrationTestImplementation 'com.intuit.karate:karate-junit5:0.9.1'
-    integrationTestImplementation 'com.intuit.karate:karate-apache:0.9.1'
+    integrationTestImplementation  group: 'com.intuit.karate', name:'karate-junit5',  version:"${project.'com.intuit.karate.version'}"
+    integrationTestImplementation  group: 'com.intuit.karate', name:'karate-apache',  version:"${project.'com.intuit.karate.version'}"
 }
 
 check.dependsOn integrationTest
